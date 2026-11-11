@@ -5,3 +5,13 @@ export const getAllBooks = async()=>{
 
     return books
 }
+
+export const getBookById = async (id:number)=>{
+    const book = await bookRepository.getBookById(id);
+
+    if(!book){
+        throw new Error("Book not found")
+    }
+
+    return book;
+}
