@@ -1,21 +1,20 @@
-import type { Request, Response,NextFunction } from "express";
-
-import * as bookService from '../services/book.service.js'
+import type { Request, Response, NextFunction } from "express";
+import * as bookService from '../services/book.service.js';
 
 export const getAllBooks = async (
-    req_:Request,
-    res:Response,
-    next:NextFunction
-)=>{
+    _req: Request,
+    res: Response,
+    next: NextFunction
+): Promise<void> => {
     try {
-        const books = await bookService.getAllBooks()
+        const books = await bookService.getAllBooks();
 
         res.status(200).json({
-            success:true,
+            success: true,
             count: books.length,
-            data:books
-        })
+            data: books
+        });
     } catch (error) {
-        next(error)
+        next(error);
     }
-}
+};

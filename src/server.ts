@@ -1,10 +1,27 @@
-console.log("Database Pool Statistics:");
+import app from "./app.js";
+import { env } from "./config/env.js";
+import { pool } from "./config/database.js";
 
+const startServer = async () => {
+    try {
+        // Test PostgreSQL connection
+        const result = await pool.query(
+            "SELECT current_database() AS database"
+        );
 
-console.log("Database Pool Statistics:");
+        console.log(`Connected to database: ${result.rows[0].database}`);
 
-console.log({
-    totalConnections: pool.totalCount,
-    idleConnections: pool.idleCount,
-    waitingRequests: pool.waitingCount,
-});
+        // Start Express server
+        app.listen(env.PORT, () => {
+            console.log(`BookNest API running on port ${env.PORT}`);
+        });
+
+    } catch (error) {
+        console.error("Failed to start server:", error);
+
+        await pool.end();
+        process.exit(1);
+    }
+};
+
+startServer();
