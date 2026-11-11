@@ -1,10 +1,9 @@
 import type { Request, Response,NextFunction } from "express";
 
 import * as bookService from '../services/book.service.js'
-import { success } from "zod";
 
 export const getAllBooks = async (
-    req:Request,
+    req_:Request,
     res:Response,
     next:NextFunction
 )=>{

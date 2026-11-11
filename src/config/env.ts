@@ -12,7 +12,7 @@ const envSchema = z.object({
 
     DB_PORT: z.coerce.number().int().positive(),
 
-    DB_NAME: z.string().min(1),database.ts
+    DB_NAME: z.string().min(1),database.ts,
 
     DB_USER: z.string().min(1),
 
