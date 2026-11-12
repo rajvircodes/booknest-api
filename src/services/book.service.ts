@@ -1,4 +1,5 @@
 import * as bookRepository from '../repositories/book.repository.js'
+import type { CreateBookInput } from "../validators/book.validator.js";
 
 export const getAllBooks = async()=>{
     const books = await bookRepository.getAllBooks()
@@ -15,3 +16,10 @@ export const getBookById = async (id:number)=>{
 
     return book;
 }
+
+
+export const createBook = async (data: CreateBookInput) => {
+    const book = await bookRepository.createBook(data);
+
+    return book;
+};
