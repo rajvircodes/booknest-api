@@ -1,46 +1,25 @@
-import type { Request, Response, NextFunction } from "express";
-import * as bookService from '../services/book.service.js';
+import type { CreateBookInput } from "../validators/book.validator.js";
 
-export const getAllBooks = async (
-    _req: Request,
-    res: Response,
-    next: NextFunction
-): Promise<void> => {
-    try {
-        const books = await bookService.getAllBooks();
+export const createBook = async (data: CreateBookInput) => {
+    const query = `
+        INSERT INTO books (
+            title,
+            isbn,
+            description,
+            published_year
+        )
+        VALUES ($1, $2, $3, $4)
+        RETURNING *;
+    `;
 
-        res.status(200).json({
-            success: true,
-            count: books.length,
-            data: books
-        });
-    } catch (error) {
-        next(error);
-    }
+    const values = [
+        data.title,
+        data.isbn ?? null,
+        data.description ?? null,
+        data.published_year ?? null,
+    ];
+
+    const result = await pool.query(query, values);
+
+    return result.rows[0];
 };
-
-export const getBookById = async (
-    req:Request,
-    res:Response,
-    next:NextFunction
-)=>{
-    try {
-        const id = Number(req.params.id)
-
-        if(!Number.isInteger(id) || id <= 0){
-            res.status(400).json({
-                success:false,
-                message:"Invalid book ID",
-            });
-            return;
-        }
-
-        const book = await bookService.getBookById(id);
-            res.status(200).json({
-                success:true,
-                data:book,
-            })
-    } catch (error) {
-        next(error)
-    }
-}
