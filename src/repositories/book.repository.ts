@@ -49,3 +49,33 @@ export const createBook = async (data: CreateBookInput) => {
     return result.rows[0];
 };
 
+
+import type { UpdateBookInput } from "../validators/update-book.validator.js";
+
+export const updateBook = async (
+    id: number,
+    data: UpdateBookInput
+) => {
+    const query = `
+        UPDATE books
+        SET
+            title = COALESCE($1, title),
+            isbn = COALESCE($2, isbn),
+            description = COALESCE($3, description),
+            published_year = COALESCE($4, published_year)
+        WHERE id = $5
+        RETURNING *;
+    `;
+
+    const values = [
+        data.title,
+        data.isbn,
+        data.description,
+        data.published_year,
+        id,
+    ];
+
+    const result = await pool.query(query, values);
+
+    return result.rows[0] || null;
+};
