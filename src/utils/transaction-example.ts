@@ -1,6 +1,6 @@
 import { pool } from "../config/database.js";
 
-const borrowBook = async (
+export const borrowBook = async (
     memberId: number,
     bookCopyId: number
 ) => {

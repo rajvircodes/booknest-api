@@ -4,7 +4,7 @@ import { createBookSchema } from "../validators/book.validator.js";
 
 // GET /api/books
 export const getAllBooks = async (
-    req: Request,
+    _req: Request,
     res: Response,
     next: NextFunction
 ) => {
