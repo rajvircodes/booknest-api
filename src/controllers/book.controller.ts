@@ -121,3 +121,32 @@ export const updateBook = async (
         next(error);
     }
 };
+
+// DELETE /api/books/:id
+
+export const deleteBook = async(
+    req:Request,
+    res:Response,
+    next:NextFunction
+)=>{
+    try {
+        const id = Number(req.params.id)
+
+        if(!Number.isInteger(id) || id <=0){
+            res.status(400).json({
+                success:false,
+                message:"Invalid book ID"
+            });
+            return
+        }
+
+        const deleteBook = await bookService.deleteBook(id);
+        res.status(200).json({
+            success:true,
+            message:"Book deleted successfully!",
+            data:deleteBook,
+        })
+    } catch (error) {
+        next(error)
+    }
+}
