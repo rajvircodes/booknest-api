@@ -35,3 +35,14 @@ export const updateBook = async (
 
     return updatedBook;
 };
+
+export const deleteBook = async (id:number)=>{
+    const deleteBook = await bookRepository.deleteBook(id);
+
+
+    if(!deleteBook){
+        throw Error("Book not found!")
+    }
+
+    return deleteBook;
+}
