@@ -79,3 +79,15 @@ export const updateBook = async (
 
     return result.rows[0] || null;
 };
+
+
+export const deleteBook = async (id:number)=>{
+    const query = `
+        DELETE FROM books 
+        WHERE id = $1
+        RETURNING *;
+    `;
+
+    const result = await pool.query(query, [id]);
+    return result.rows[0] || null
+}
