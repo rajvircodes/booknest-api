@@ -1,6 +1,7 @@
 import * as bookRepository from '../repositories/book.repository.js';
 import type { CreateBookInput } from '../validators/book.validator.js';
 import type { UpdateBookInput } from "../validators/update-book.validator.js";
+import ApiError from "../utils/api-error.js";
 export const getAllBooks = async () => {
     const books = await bookRepository.getAllBooks();
 
@@ -11,7 +12,7 @@ export const getBookById = async (id: number) => {
     const book = await bookRepository.getBookById(id);
 
     if (!book) {
-        throw new Error('Book not found');
+        throw new ApiError("Book not found", 404);
     }
 
     return book;
@@ -30,7 +31,7 @@ export const updateBook = async (
     const updatedBook = await bookRepository.updateBook(id, data);
 
     if (!updatedBook) {
-        throw new Error("Book not found");
+        throw new ApiError("Book not found", 404);
     }
 
     return updatedBook;
@@ -41,7 +42,7 @@ export const deleteBook = async (id:number)=>{
 
 
     if(!deleteBook){
-        throw Error("Book not found!")
+        throw new ApiError("Book not found", 404);
     }
 
     return deleteBook;
