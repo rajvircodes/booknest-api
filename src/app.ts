@@ -1,6 +1,7 @@
 import express from 'express'
 import bookRoutes from './routes/book.routes.js'
 import errorMiddleware from './middlewares/error.middleware.js'
+import notFoundMiddleware from "./middlewares/not-found.middleware.js";
 
 const app = express()
 
@@ -14,5 +15,6 @@ app.get('/health',(_req,res)=>{
 })
 
 app.use('/api/books', bookRoutes)
+app.use(notFoundMiddleware);
 app.use(errorMiddleware);
 export default app
