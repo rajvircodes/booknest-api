@@ -32,6 +32,7 @@ app.get('/health',(_req,res)=>{
    })
 })
 
+app.use("/api", apiLimiter);
 app.use('/api/books', bookRoutes)
 app.use(notFoundMiddleware);
 app.use(errorMiddleware);
