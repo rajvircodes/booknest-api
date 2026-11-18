@@ -6,7 +6,7 @@ import helmet from "helmet";
 import morgan from "morgan";
 import cors from "cors";
 import { rateLimit } from "express-rate-limit";
-
+import { env } from "./config/env.js";
 const app = express()
 const apiLimiter = rateLimit({
     windowMs: 15 * 60 * 1000, // 15 minutes
@@ -21,7 +21,7 @@ const apiLimiter = rateLimit({
 app.use(helmet());
 app.use(morgan("dev"));
 app.use(cors({
-    origin: "http://localhost:5173",
+    origin: env.CLIENT_URL,
 }));
 app.use(express.json())
 
