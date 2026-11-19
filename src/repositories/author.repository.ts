@@ -20,6 +20,16 @@ export const getAllAuthors = async(id:number)=>{
     return result.rows[0] || null
 }
 
+export const getAuthorById = async(id:number)=>{
+    const query =  `
+        SELECT * FROM authors
+        WHERE id = $1;
+    `;
+
+    const result = await pool.query(query,[id]);
+    return result.rows[0] || null;
+}
+
 export const createAuthor = async(data:CreateAuthorInput)=>{
     const query =  `
         INSERT INTO authors (name, biography)
