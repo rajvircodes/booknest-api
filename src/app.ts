@@ -2,6 +2,7 @@ import express from 'express'
 import bookRoutes from './routes/book.routes.js'
 import errorMiddleware from './middlewares/error.middleware.js'
 import notFoundMiddleware from "./middlewares/not-found.middleware.js";
+import authorRoutes from "./routes/author.routes.js";
 import helmet from "helmet";
 import morgan from "morgan";
 import cors from "cors";
@@ -34,6 +35,7 @@ app.get('/health',(_req,res)=>{
 
 app.use("/api", apiLimiter);
 app.use('/api/books', bookRoutes)
+app.use("/api/authors", authorRoutes);
 app.use(notFoundMiddleware);
 app.use(errorMiddleware);
 export default app
