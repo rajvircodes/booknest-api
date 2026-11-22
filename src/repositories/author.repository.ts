@@ -1,5 +1,8 @@
 import { pool } from "../config/database.js";
+// import type { CreateAuthorInput, UpdateAuthorInput } from "../validators/author.validator.js";
+
 import type { CreateAuthorInput } from "../validators/author.validator.js";
+import type { UpdateAuthorInput } from "../validators/update-author.validator.js";
 
 
 
@@ -45,3 +48,28 @@ export const createAuthor = async(data:CreateAuthorInput)=>{
     const result = await pool.query(query, values)
     return result.rows[0];
 }
+
+// UPDATE author
+export const updateAuthor = async (
+    id: number,
+    data: UpdateAuthorInput
+) => {
+    const query = `
+        UPDATE authors
+        SET
+            name = COALESCE($1, name),
+            biography = COALESCE($2, biography)
+        WHERE id = $3
+        RETURNING *;
+    `;
+
+    const values = [
+        data.name ?? null,
+        data.biography ?? null,
+        id,
+    ];
+
+    const result = await pool.query(query, values);
+
+    return result.rows[0] || null;
+};
