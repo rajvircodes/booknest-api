@@ -5,7 +5,7 @@ import type { CreateAuthorInput } from "../validators/author.validator.js";
 
 // Get all authors
 
-export const getAllAuthors = async(id:number)=>{
+export const getAllAuthors = async()=>{
     const query = `
     SELECT
         id,
@@ -16,8 +16,8 @@ export const getAllAuthors = async(id:number)=>{
     ORDER BY created_at DESC;
     `;
 
-    const result = await pool.query(query,[id]);
-    return result.rows[0] || null
+    const result = await pool.query(query);
+    return result.rows;
 }
 
 export const getAuthorById = async(id:number)=>{
