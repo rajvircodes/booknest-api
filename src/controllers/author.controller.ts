@@ -117,3 +117,32 @@ export const updateAuthor = async (
         next(error);
     }
 };
+
+// DELETE /api/authors/:id
+export const deleteAuthor = async (
+    req: Request,
+    res: Response,
+    next: NextFunction
+) => {
+    try {
+        const id = Number(req.params.id);
+
+        if (!Number.isInteger(id) || id <= 0) {
+            res.status(400).json({
+                success: false,
+                message: "Invalid author ID",
+            });
+            return;
+        }
+
+        const author = await authorService.deleteAuthor(id);
+
+        res.status(200).json({
+            success: true,
+            message: "Author deleted successfully",
+            data: author,
+        });
+    } catch (error) {
+        next(error);
+    }
+};

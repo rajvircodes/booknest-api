@@ -38,3 +38,14 @@ export const updateAuthor = async (
 
     return author;
 };
+
+// DELETE author
+export const deleteAuthor = async (id: number) => {
+    const author = await authorRepository.deleteAuthor(id);
+
+    if (!author) {
+        throw new ApiError("Author not found", 404);
+    }
+
+    return author;
+};

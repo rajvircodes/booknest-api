@@ -73,3 +73,16 @@ export const updateAuthor = async (
 
     return result.rows[0] || null;
 };
+
+// DELETE author
+export const deleteAuthor = async (id: number) => {
+    const query = `
+        DELETE FROM authors
+        WHERE id = $1
+        RETURNING *;
+    `;
+
+    const result = await pool.query(query, [id]);
+
+    return result.rows[0] || null;
+};
