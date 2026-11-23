@@ -1,7 +1,7 @@
 import type { Request, Response, NextFunction } from "express";
 import * as authorService from '../services/author.service.js'
 import { createAuthorSchema } from "../validators/author.validator.js";
-
+import { updateAuthorSchema } from "../validators/update-author.validator.js";
 
 // GET /api/author
 
@@ -70,6 +70,47 @@ export const createAuthor = async (
         res.status(201).json({
             success: true,
             message: "Author created successfully",
+            data: author,
+        });
+    } catch (error) {
+        next(error);
+    }
+};
+// PUT /api/authors/:id
+export const updateAuthor = async (
+    req: Request,
+    res: Response,
+    next: NextFunction
+) => {
+    try {
+        const id = Number(req.params.id);
+
+        if (!Number.isInteger(id) || id <= 0) {
+            res.status(400).json({
+                success: false,
+                message: "Invalid author ID",
+            });
+            return;
+        }
+
+        const validation = updateAuthorSchema.safeParse(req.body);
+
+        if (!validation.success) {
+            res.status(400).json({
+                success: false,
+                errors: validation.error.flatten().fieldErrors,
+            });
+            return;
+        }
+
+        const author = await authorService.updateAuthor(
+            id,
+            validation.data
+        );
+
+        res.status(200).json({
+            success: true,
+            message: "Author updated successfully",
             data: author,
         });
     } catch (error) {

@@ -6,5 +6,6 @@ const router = Router();
 router.get("/", authorController.getAllAuthors);
 router.get("/:id", authorController.getAuthorById);
 router.post("/", authorController.createAuthor);
+router.put("/:id", authorController.updateAuthor);
 
 export default router;
