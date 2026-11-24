@@ -4,7 +4,7 @@ import ApiError from "../utils/api-error.js";
 
 const notFoundMiddleware = (
     req:Request,
-    res:Response,
+    _res:Response,
     next:NextFunction
 )=>{
     next(
