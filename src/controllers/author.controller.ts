@@ -6,7 +6,7 @@ import { updateAuthorSchema } from "../validators/update-author.validator.js";
 // GET /api/author
 
 export const getAllAuthors = async(
-    req:Request,
+    _req:Request,
     res:Response,
     next:NextFunction
 )=>{
