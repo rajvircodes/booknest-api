@@ -3,9 +3,9 @@ import ApiError from "../utils/api-error.js";
 
 const errorMiddleware = (
     error: Error,
-    req: Request,
+    _req: Request,
     res: Response,
-    next: NextFunction
+    _next: NextFunction
 ) => {
     let statusCode = 500;
     let message = "Internal Server Error";
